@@ -201,10 +201,96 @@ class userActivity(Resource):
         # if user want search all activity and on the month all people entered that room
         # if user want search all activity and on the date all people entered that room
         # if user want search all activity and on the day all people entered that room
-        # if user want search all activity and on the month and on the date all people entered that room
-        # if user want search all activity and on the month and on the day all people entered that room
-        # if user want search all activity that check in that room
-        # if user want search all activity that check out that room
+        
+        # if user want search all activity and on the month and on the date all people entered that room (dedi)
+        elif idCard == None and dt != None and dy == None and mn != None and status == None:
+            if dt in date and mn in month:
+                allData = []
+                data = self.getAllUser()
+                
+                if data:
+                    for row in data:
+                        rowDate = row[3].strftime("%d")
+                        rowMonth = row[3].strftime("%b")
+                        
+                        if rowDate == dt and rowMonth == mn:
+                            dictData = self.convertToDict(row)
+                            allData.append(dictData)
+                        
+                    if allData:
+                        return jsonify(allData)
+                    else:
+                        abort(404,message="The Data You Looking For Doesn't Exist",status=404)
+                else:
+                    abort(404,message="The Data You Looking For Doesn't Exist",status=404)
+            else:
+                abort(404,message="The Data You Looking For Doesn't Exist",status=404)
+        
+        # if user want search all activity and on the month and on the day all people entered that room (dedi)
+        elif idCard == None and dt == None and dy != None and mn != None and status == None:
+            if dy in day and mn in month:
+                allData = []
+                data = self.getAllUser()
+                
+                if data:
+                    for row in data:
+                        rowDay = row[3].strftime("%a")
+                        rowMonth = row[3].strftime("%b")
+                        
+                        if rowDay == dy and rowMonth == mn:
+                            dictData = self.convertToDict(row)
+                            allData.append(dictData)
+                        
+                    if allData:
+                        return jsonify(allData)
+                    else:
+                        abort(404,message="The Data You Looking For Doesn't Exist",status=404)
+                else:
+                    abort(404,message="The Data You Looking For Doesn't Exist",status=404)
+            else:
+                abort(404,message="The Data You Looking For Doesn't Exist",status=404)
+        
+        # if user want search all activity that check in that room(dedi)
+        elif idCard == None and dt == None and dy == None and mn == None and status != None:
+            if status.lower() == "masuk":
+                allData = []
+                data = self.getAllUser()
+                
+                if data:
+                    for row in data:
+                        rowStatus = row[4]
+                        if rowStatus.lower() == "masuk":
+                            dictData = self.convertToDict(row)
+                            allData.append(dictData)
+                    if allData:
+                        return jsonify(allData)
+                    else:
+                        abort(404,message="The Data You Looking For Doesn't Exist",status=404)
+                else:
+                    abort(404,message="The Data You Looking For Doesn't Exist",status=404)
+            else:
+                abort(404,message="The Data You Looking For Doesn't Exist",status=404)
+        
+        # if user want search all activity that check out that room (dedi)
+        elif idCard == None and dt == None and dy == None and mn == None and status != None:
+            if status.lower() == "keluar":
+                allData = []
+                data = self.getAllUser()
+                
+                if data:
+                    for row in data:
+                        rowStatus = row[4]
+                        if rowStatus.lower() == "keluar":
+                            dictData = self.convertToDict(row)
+                            allData.append(dictData)
+                    if allData:
+                        return jsonify(allData)
+                    else:
+                        abort(404,message="The Data You Looking For Doesn't Exist",status=404)
+                else:
+                    abort(404,message="The Data You Looking For Doesn't Exist",status=404)
+            else:
+                abort(404,message="The Data You Looking For Doesn't Exist",status=404)
         
 
                 
