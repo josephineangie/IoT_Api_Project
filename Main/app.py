@@ -128,7 +128,40 @@ class userActivity(Resource):
             else:
                 abort(404,message="The Data You Looking For Doesn't Exist",status=404)
         
-        # if user want search spesified idCard and on the month and on the date he/she entered the room
+        # if user want search spesified idCard and on the month and on the date he/she entered the room (Angie)
+        elif idCard != None and dt != None and dy == None and mn != None and status == None:
+            if dt in date:
+                data = self.getUserById(idCard)
+                allData = []
+                if data : #cek jika terdapat data yang dicari
+                    for row in data:
+                        checkDt = row[3].strftime("%d")
+                        if checkDt == dt:
+                            dictData = self.convertToDict(row)
+                            allData.append(dictData)
+                    if allData: #cek jika terdapat data yang dicari
+                        return jsonify(allData)
+                    else:
+                        abort(404,message="The Data You Looking For Doesn't Exist",status=404)
+                else:
+                    abort(404,message="The Data You Looking For Doesn't Exist",status=404)
+            elif mn in month:
+                data = self.getUserById(idCard)
+                allData = []
+                if data: #cek jika terdapat data yang dicari
+                    for row in data:
+                        checkMt = row[3].strftime("%b")
+                        if checkMt == mn:
+                            dictData = self.convertToDict(row)
+                            allData.append(dictData)
+                    if allData: #cek jika terdapat data yang dicari
+                        return jsonify(allData)
+                    else:
+                        abort(404,message="The Data You Looking For Doesn't Exist",status=404)
+                else:
+                    abort(404,message="The Data You Looking For Doesn't Exist",status=404)
+            else:
+                abort(404,message="The Data You Looking For Doesn't Exist",status=404)
         # if user want search spesified idCard and on the month and on the day he/she entered the room
         # if user want search all activity and on the month all people entered that room
         # if user want search all activity and on the date all people entered that room
