@@ -198,9 +198,53 @@ class userActivity(Resource):
             else:
                 abort(404,message="The Data You Looking For Doesn't Exist",status=404)
                 
-        # if user want search all activity and on the month all people entered that room
-        # if user want search all activity and on the date all people entered that room
-        # if user want search all activity and on the day all people entered that room
+        # if user want search all activity and on the month all people entered that room (Angie)
+        elif idCard == None and dt == None and dy == None and mn != None and status == None:
+            if mn in month:
+                allData = []
+                data = self.getAllUser()
+                if data:
+                    for row in data:
+                        rowMonth = row[3].strftime("%b")
+                        if rowMonth == mn:
+                            dictData = self.convertToDict(row)
+                            allData.append(dictData)
+                    if allData:
+                        return jsonify(allData)
+                    else:
+                        abort(
+                            404, message="The Data You Looking For Doesn't Exist", status=404)
+                else:
+                    abort(
+                        404, message="The Data You Looking For Doesn't Exist", status=404)
+            else:
+                abort(404, message="The Data You Looking For Doesn't Exist", status=404)
+
+        # if user want search all activity and on the date all people entered that room (Alya)
+
+        # if user want search all activity and on the day all people entered that room (Alya)
+        elif idCard == None and dt == None and dy != None and mn == None and status == None:
+            if dy in day:
+                allData = []
+                data = self.getAllUser()
+                if data:
+                    for row in data:
+                        rowDay = row[3].strftime("%a")
+
+                        if rowDay == dy:
+                            dictData = self.convertToDict(row)
+                            allData.append(dictData)
+
+                    if allData:
+                        return jsonify(allData)
+                    else:
+                        abort(
+                            404, message="The Data You Looking For Doesn't Exist", status=404)
+                else:
+                    abort(
+                        404, message="The Data You Looking For Doesn't Exist", status=404)
+            else:
+                abort(404, message="The Data You Looking For Doesn't Exist", status=404)
         
         # if user want search all activity and on the month and on the date all people entered that room (dedi)
         elif idCard == None and dt != None and dy == None and mn != None and status == None:
